@@ -54,6 +54,7 @@ public class AddressBook {
 	public void editPerson() {
 		if(addressBookList.isEmpty()) {
 			System.out.println("No Enteries in Address Book");
+			addressBookCRUDOperationChoice();
 		}else {
 
 			
@@ -113,11 +114,29 @@ public class AddressBook {
 		}
 	}
 	
+	public void deletePerson() {
+		if(addressBookList.isEmpty()) {
+			System.out.println("No Enteries in Address Book : Delete Invalid");
+			addressBookCRUDOperationChoice();
+		}else {
+			for(PersonDetails i : addressBookList) {
+				System.out.println(addressBookList.indexOf(i)+ " : "+ i.getFirstName());
+			}
+			System.out.println("Enter the firstName  and index to edit that person details : " );
+			String deletePerson = sc.next();
+			int index = sc.nextInt();
+			addressBookList.remove(index);
+			System.out.println("Deleted Successfully: " + index+ " : " + deletePerson);
+			addressBookCRUDOperationChoice();
+		}
+		
+	}
+	
 	public void addressBookCRUDOperationChoice() {
 		
 		int choice;
-		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" +"2: Display " +"\n"+"3: Edit person"+"\n"+"4: Exit");
-		 Label:
+		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" +"2: Display " +"\n"+"3: Edit person"+"\n"+
+							"4: Delete Person" + "\n"+ "5: Exit");
 		while(true) {
 		System.out.println("Enter the choice");
 		choice = sc.nextInt();
@@ -131,6 +150,8 @@ public class AddressBook {
 		case 3:
 			editPerson();
 		case 4:
+			deletePerson();
+		case 5:
 			System.exit(0);
 			break;
 		default:
@@ -143,7 +164,6 @@ public class AddressBook {
 	public static void main(String[] args) {
 		
 		AddressBook object_1 = new AddressBook();
-	//	addressBookList.add(object_1);
 		object_1.addressBookCRUDOperationChoice();
 				
 	}
