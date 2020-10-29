@@ -13,6 +13,7 @@ public class AddressBook {
 	public static List<PersonDetails> addressBookList = new ArrayList<>();
 	public static List<AddressBookRecord> bookNameList = new ArrayList<>();
 	public static Map<Integer, String> booksList = new HashMap<>();
+	public static Map<String, String> personByCity = new HashMap<>();
 	boolean result;
 	Scanner sc = new Scanner(System.in);
 
@@ -154,7 +155,8 @@ public class AddressBook {
 		int choice;
 		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" + "2: Display " + "\n" + "3: Edit person"
 				+ "\n" + "4: Delete Person" + "\n" + "5: Add Multiple Persons " + "\n" + "6: Add Address Book " + "\n"
-				+ "7: Display Address Book Record " + "\n" + "8: Search By City " + "9: Exit");
+				+ "7: Display Address Book Record " + "\n" + "8: Search By City " 
+				+"\n"+"9: get Persons by city "+ "\n"+"10: Exit");
 		while (true) {
 			System.out.println("Enter the choice");
 			choice = sc.nextInt();
@@ -178,6 +180,8 @@ public class AddressBook {
 			case 8:
 				searchByCityToAddressBook();
 			case 9:
+				getPersonByCityToAddressBook();
+			case 10:
 				System.exit(0);
 				break;
 			default:
@@ -222,17 +226,25 @@ public class AddressBook {
 
 	}
 
+	public void displayAddressBookRecord() {
+		for (Map.Entry m : booksList.entrySet()) {
+			System.out.println(m.getKey() + " " + m.getValue());
+		}
+	}
 	public void searchByCityToAddressBook() {
 		System.out.println("Enter the city to search");
 		String city = sc.next();
 		addressBookList.stream().filter(element -> element.getCity().equals(city)).forEach(i->System.out.println("Match Found : "+i.firstName));
 		addressBookCRUDOperationChoice();
 	}
-
-	public void displayAddressBookRecord() {
-		for (Map.Entry m : booksList.entrySet()) {
-			System.out.println(m.getKey() + " " + m.getValue());
+	public void getPersonByCityToAddressBook() {
+		System.out.println("Enter the city to ");
+		String city = sc.next();
+		addressBookList.stream().filter(element -> element.getCity().equals(city)).forEach(i-> personByCity.put(i.firstName,city ));
+		for (Map.Entry m : personByCity.entrySet()) {
+			System.out.println(m.getKey() + " : " + m.getValue());
 		}
+		addressBookCRUDOperationChoice();
 	}
 
 	public static void main(String[] args) {
