@@ -15,6 +15,7 @@ public class AddressBook {
 	public static Map<Integer, String> booksList = new HashMap<>();
 	public static Map<String, String> personByCity = new HashMap<>();
 	boolean result;
+	public long count;
 	Scanner sc = new Scanner(System.in);
 
 	public void display() {
@@ -156,7 +157,8 @@ public class AddressBook {
 		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" + "2: Display " + "\n" + "3: Edit person"
 				+ "\n" + "4: Delete Person" + "\n" + "5: Add Multiple Persons " + "\n" + "6: Add Address Book " + "\n"
 				+ "7: Display Address Book Record " + "\n" + "8: Search By City " 
-				+"\n"+"9: get Persons by city "+ "\n"+"10: Exit");
+				+"\n"+"9: get Persons by city "+ "\n"+
+				"10: Get Count Of Persons By City " + "\n"+ "11: Exit");
 		while (true) {
 			System.out.println("Enter the choice");
 			choice = sc.nextInt();
@@ -182,6 +184,8 @@ public class AddressBook {
 			case 9:
 				getPersonByCityToAddressBook();
 			case 10:
+				getCountOfPersonsByCityToAddressBook();
+			case 11:
 				System.exit(0);
 				break;
 			default:
@@ -238,12 +242,20 @@ public class AddressBook {
 		addressBookCRUDOperationChoice();
 	}
 	public void getPersonByCityToAddressBook() {
-		System.out.println("Enter the city to ");
-		String city = sc.next();
-		addressBookList.stream().filter(element -> element.getCity().equals(city)).forEach(i-> personByCity.put(i.firstName,city ));
+		System.out.println("Enter the city: ");
+		String searchedCity = sc.next();
+		addressBookList.stream().filter(element -> element.getCity().equals(searchedCity)).forEach(i-> personByCity.put(i.getFirstName(), searchedCity));
 		for (Map.Entry m : personByCity.entrySet()) {
 			System.out.println(m.getKey() + " : " + m.getValue());
 		}
+		addressBookCRUDOperationChoice();
+	}
+	public void getCountOfPersonsByCityToAddressBook() {
+		System.out.println("Enter the city to ");
+		String city = sc.next();
+		
+	    count = addressBookList.stream().filter(element -> element.getCity().equals(city)).count();
+		System.out.println("Number of Persons By City : " + count);
 		addressBookCRUDOperationChoice();
 	}
 
