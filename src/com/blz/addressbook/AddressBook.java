@@ -1,5 +1,6 @@
 package com.blz.addressbook;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -153,7 +154,7 @@ public class AddressBook {
 		int choice;
 		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" + "2: Display " + "\n" + "3: Edit person"
 				+ "\n" + "4: Delete Person" + "\n" + "5: Add Multiple Persons " + "\n" + "6: Add Address Book " + "\n"
-				+ "7: Display Address Book Record " + "\n" + "8: Exit");
+				+ "7: Display Address Book Record " + "\n" + "8: Search By City " + "9: Exit");
 		while (true) {
 			System.out.println("Enter the choice");
 			choice = sc.nextInt();
@@ -175,6 +176,8 @@ public class AddressBook {
 			case 7:
 				displayAddressBookRecord();
 			case 8:
+				searchByCityToAddressBook();
+			case 9:
 				System.exit(0);
 				break;
 			default:
@@ -217,6 +220,13 @@ public class AddressBook {
 
 		addressBookCRUDOperationChoice();
 
+	}
+
+	public void searchByCityToAddressBook() {
+		System.out.println("Enter the city to search");
+		String city = sc.next();
+		addressBookList.stream().filter(element -> element.getCity().equals(city)).forEach(i->System.out.println("Match Found : "+i.firstName));
+		addressBookCRUDOperationChoice();
 	}
 
 	public void displayAddressBookRecord() {
