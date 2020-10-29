@@ -1,13 +1,18 @@
 package com.blz.addressbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
 
 	public static List<PersonDetails> addressBookList = new ArrayList<>();
+	public static List<AddressBookRecord> bookNameList = new ArrayList<>();
+	public static Map<Integer, String> booksList = new HashMap<>();
+	boolean result;
 	Scanner sc = new Scanner(System.in);
 
 	public void display() {
@@ -122,8 +127,8 @@ public class AddressBook {
 			}
 			System.out.println("Enter the firstName to delete that person details : ");
 			String deletePerson = sc.next();
-			for(int i=0;i< addressBookList.size(); i++){
-				if(addressBookList.get(i).getFirstName().equals(deletePerson)){
+			for (int i = 0; i < addressBookList.size(); i++) {
+				if (addressBookList.get(i).getFirstName().equals(deletePerson)) {
 					addressBookList.remove(addressBookList.get(i));
 				}
 			}
@@ -132,14 +137,14 @@ public class AddressBook {
 		}
 
 	}
-	
-	public void addMultiplePersons(){
+
+	public void addMultiplePersons() {
 		System.out.println("Enter the Number of Persons to add : ");
 		int number = sc.nextInt();
-		for(int i=1;i<=number;i++) {
+		for (int i = 1; i <= number; i++) {
 			addPerson();
 		}
-		System.out.println("Number of Persons " + number +" Add Successfully");
+		System.out.println("Number of Persons " + number + " Add Successfully");
 		addressBookCRUDOperationChoice();
 	}
 
@@ -147,7 +152,8 @@ public class AddressBook {
 
 		int choice;
 		System.out.println("Menu Item: " + "\n" + "1: Add Person" + "\n" + "2: Display " + "\n" + "3: Edit person"
-				+ "\n" + "4: Delete Person" + "\n" + "5: Add Multiple Persons " + "\n" + "6: Exit");
+				+ "\n" + "4: Delete Person" + "\n" + "5: Add Multiple Persons " + "\n" + "6: Add Address Book " + "\n"
+				+ "7: Display Address Book Record " + "\n" + "8: Exit");
 		while (true) {
 			System.out.println("Enter the choice");
 			choice = sc.nextInt();
@@ -165,6 +171,10 @@ public class AddressBook {
 			case 5:
 				addMultiplePersons();
 			case 6:
+				addAddressBook();
+			case 7:
+				displayAddressBookRecord();
+			case 8:
 				System.exit(0);
 				break;
 			default:
@@ -172,6 +182,46 @@ public class AddressBook {
 				break;
 			}
 
+		}
+	}
+
+	public void addAddressBook() {
+		System.out.println("Enter the Address Book Id and Name : ");
+		int id = sc.nextInt();
+		String name = sc.next();
+		AddressBookRecord books = new AddressBookRecord(id, name);
+
+		if (bookNameList.isEmpty()) {
+			System.out.println("check");
+			bookNameList.add(books);
+			booksList.put(id, name);
+			System.out.println("Address Book Added Successfully: ");
+			for (AddressBookRecord i : bookNameList) {
+				System.out.println(i.bookName);
+			}
+		} else {
+			for (int i = 0; i < bookNameList.size(); i++) {
+				if (bookNameList.get(i).getBookName().equals(name)) {
+					result = bookNameList.get(i).getBookName().equals(name);
+					System.out.println("Address Book Already Exists");
+					break;
+				}
+			}
+			if (!result) {
+				bookNameList.add(books);
+				booksList.put(id, name);
+				System.out.println("Address Book Added Successfully: ");
+			}
+
+		}
+
+		addressBookCRUDOperationChoice();
+
+	}
+
+	public void displayAddressBookRecord() {
+		for (Map.Entry m : booksList.entrySet()) {
+			System.out.println(m.getKey() + " " + m.getValue());
 		}
 	}
 
