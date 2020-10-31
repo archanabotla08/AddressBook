@@ -65,4 +65,7 @@ public class PersonDetails {
 	public String getEmail() {
 		return email;
 	}
+	public String toString() {
+		return String.format(firstName);
+	}
 }
